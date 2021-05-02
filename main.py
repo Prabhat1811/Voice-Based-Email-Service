@@ -4,6 +4,7 @@ from time import sleep
 import threading
 
 
+#Enter your email and password
 emailId = ""
 password = ""
 
