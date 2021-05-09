@@ -107,9 +107,9 @@ def read():
 
 
 def main():
-    # a.speak(greetings)
-    # a.speak(instructions)
-    # a.speak(commands)
+    a.speak(greetings)
+    a.speak(instructions)
+    a.speak(commands)
 
     name = get_credential("What would you like to name me", str)
     name = name[0].upper()+name[1:]
