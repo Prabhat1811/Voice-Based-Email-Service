@@ -95,17 +95,3 @@ class EmailOperations:
 
     def delete(self,emailId):
         pass
-
-
-# emailAddress=''
-# password=''
-# subject="email for testing"
-# body="Hi,this is the body of the email. This is an automated email please donot reply"
-
-# s=EmailOperations(emailAddress,password)
-
-# s.send(email,subject,body)
-# print(s.fetch())
-
-# print(s.get_info("Subject: Prabhat", "Subject: "))
-# s.check()
