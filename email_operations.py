@@ -97,8 +97,8 @@ class EmailOperations:
         pass
 
 
-# emailAddress='scripttesting12345@gmail.com'
-# password='qazwsx$98765'
+# emailAddress=''
+# password=''
 # subject="email for testing"
 # body="Hi,this is the body of the email. This is an automated email please donot reply"
 
