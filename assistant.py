@@ -63,12 +63,3 @@ class Assistant:
         mic = sr.Microphone()
         stopper = self.r.listen_in_background(mic, self.callback, phrase_time_limit = 5)
         return stopper
-
-# a = Assistant('name',150)
-
-# print(a.listen('speak'))
-
-# s = a.listen_constantly()
-
-# if a.callback() == "name":
-#     # print(True)
