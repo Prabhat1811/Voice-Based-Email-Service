@@ -4,8 +4,8 @@ from time import sleep
 import threading
 
 
-emailId = "scripttesting12345@gmail.com"
-password = "qazwsx$98765"
+emailId = "YourEmailIdHere"
+password = "YourPasswordHere"
 
 a = Assistant(None, 140, threshold = 750)
 print("Assistant object created")
