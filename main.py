@@ -145,7 +145,7 @@ def main():
             a.set_recognized_audio(None)
 
             command = a.listen("Listening")
-            print("Command : ",command)
+            print("Command : ",command, end = "")
 
             if command.lower() in ("send", "spend"):
                 a.speak(send())
@@ -173,6 +173,7 @@ def main():
                 service =False
             
             else:
+                print("None")
                 a.speak("Command not recognized")
 
 main()
