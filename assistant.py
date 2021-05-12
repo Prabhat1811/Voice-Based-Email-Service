@@ -3,7 +3,7 @@ import pyttsx3
 
 
 class Assistant:
-    def __init__(self, name, speechRate = 135, voice = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_ZIRA_11.0", threshold = 300):
+    def __init__(self, name, speechRate = 135, voice = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_ZIRA_11.0", threshold = 500):
         self._name = name
         self._speechRate = speechRate
         self.voice = voice
@@ -34,13 +34,13 @@ class Assistant:
         except Exception as e:
             return e
 
-    def listen(self, text = ""):
+    def listen(self, text = "", timeLimit = 5):
         try:
             with sr.Microphone() as source:
                 self.speak(text)
-                # self.r.adjust_for_ambient_noise(source, duration=0.5)
+                self.r.adjust_for_ambient_noise(source, duration=0.5)
                 try:
-                    audio = self.r.listen(source, timeout = 3)
+                    audio = self.r.listen(source, phrase_time_limit = timeLimit)
                     return self.r.recognize_google(audio)
                 except:
                     # self.speak("I didn't hear anything")
@@ -61,5 +61,14 @@ class Assistant:
 
     def listen_constantly(self):
         mic = sr.Microphone()
-        stopper = self.r.listen_in_background(mic, self.callback)
+        stopper = self.r.listen_in_background(mic, self.callback, phrase_time_limit = 5)
         return stopper
+
+# a = Assistant('name',150)
+
+# print(a.listen('speak'))
+
+# s = a.listen_constantly()
+
+# if a.callback() == "name":
+#     # print(True)

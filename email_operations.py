@@ -42,7 +42,7 @@ class EmailOperations:
         string = re.sub(regex, replaceWith, string)
         return string
 
-    def fetch(self,fetchCount):
+    def fetch(self, fetchCount):
         try:
             with imaplib.IMAP4_SSL('imap.'+self.emailProvider) as imap:
                 imap.login(self.emailAddress,self.emailPassword)
@@ -95,3 +95,17 @@ class EmailOperations:
 
     def delete(self,emailId):
         pass
+
+
+# emailAddress='scripttesting12345@gmail.com'
+# password='qazwsx$98765'
+# subject="email for testing"
+# body="Hi,this is the body of the email. This is an automated email please donot reply"
+
+# s=EmailOperations(emailAddress,password)
+
+# s.send(email,subject,body)
+# print(s.fetch())
+
+# print(s.get_info("Subject: Prabhat", "Subject: "))
+# s.check()

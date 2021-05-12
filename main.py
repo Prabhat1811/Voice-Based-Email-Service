@@ -4,11 +4,10 @@ from time import sleep
 import threading
 
 
-#enter your email and password
-emailId = ""
-password = ""
+emailId = "scripttesting12345@gmail.com"
+password = "qazwsx$98765"
 
-a = Assistant(None, 140, threshold = 550)
+a = Assistant(None, 140, threshold = 750)
 print("Assistant object created")
 e = EmailOperations(emailId, password)
 print("Email object Created")
@@ -16,6 +15,7 @@ print("Email object Created")
 greetings = "Hello, Welcome to Email Service for blinds, This is your assistant."
 
 instructions = """
+                Here are the instructions. 
                 Take a second to respond after i speak.
                 I can't hear properly, so, be loud and clear otherwise your voice won't be recognised.
                 You can give me any name and i will respond only to that.
@@ -28,7 +28,7 @@ instructions = """
                 """
 
 commands = """
-            The following are the commands:
+            Here are the commands. 
 
             Send - to send an email to anyone.
             Fetch - to fetch emails from your inbox.
@@ -47,11 +47,11 @@ def check_mails(assistant, email, interval):
                 assistant.speak("You have "+str(newMails)+" new email")
         sleep(interval)
 
-def get_credential(msg, classType):
+def get_credential(msg, classType, runTime = 5):
     loop = True
     while loop:
         try:
-            credential = classType(a.listen(msg).lower().replace(" ",""))
+            credential = classType(a.listen(msg, timeLimit = runTime).lower().replace(" ",""))
         except ValueError:
             a.speak("Invalid input.")
             continue
@@ -63,7 +63,7 @@ def get_credential(msg, classType):
             credential = credential.lower()
 
         while True:
-            check = a.listen(f"Do you mean {credential}?")
+            check = a.listen(f"Do you mean {credential}?", timeLimit = runTime)
 
             if check == "yes":
                 loop = False
@@ -75,18 +75,26 @@ def get_credential(msg, classType):
     return credential
 
 def send():
-    print("Send function called")
+    print("\n\n#####Send function called#####")
 
-    to = get_credential("Say recipient's name, only before the at the rate symbol", str)
+    friends = {"prabhat" : "sooperprabhat"}
+
+    to = get_credential("Say recipient's name, only before the at the rate symbol or Say their name if they are in your friends list", str)
+
+    if to in friends:
+        friendsOrNot = get_credential(f"{to} seems to be in your friend list. Do you want the get the email id from your friend list?", str)
+        if friendsOrNot.lower() == "yes":
+            to = friends[to]
+
     print("To : ",to)
 
     mailProvider = get_credential("Say recipient's mail provider", str)
     print("Provider : ",mailProvider)
 
-    subject = get_credential("Say subject of email", str)
+    subject = get_credential("Say subject of email", str, 10)
     print("Subject : ",subject)
 
-    body = get_credential("Say body of email", str)
+    body = get_credential("Say body of email", str, 20)
     print("Body : ",body)
 
     res = e.send(to+"@"+mailProvider+".com", subject, body)
@@ -94,7 +102,7 @@ def send():
     return res
 
 def read():
-    print("Read function called")
+    print("\n\n#####Read function called#####")
     
     fetchCount = get_credential("How many emails should i fetch?", int)
     a.speak(f"Fetching {fetchCount} email.")
@@ -111,15 +119,15 @@ def read():
 
 
 def main():
-    a.speak(greetings)
-    a.speak(instructions)
-    a.speak(commands)
+    # a.speak(greetings)
+    # a.speak(instructions)
+    # a.speak(commands)
 
-    name = get_credential("What would you like to name me", str)
+    name = get_credential("What would you like to name me ?", str, 5)
     name = name[0].upper()+name[1:]
 
     a.set_name(name)
-    print("Assistant named to : ",a.get_name())
+    print("\nAssistant named to : ",a.get_name())
 
     a.speak(f"You may start using the service now, by saying {name}")
 
@@ -144,13 +152,13 @@ def main():
 
             a.set_recognized_audio(None)
 
-            command = a.listen("Listening")
+            command = a.listen("Listening", timeLimit = 5)
             print("Command : ",command, end = "")
 
             if command.lower() in ("send", "spend"):
                 a.speak(send())
             
-            elif command.lower() in ("fetch", "patch", "search","read"):
+            elif command.lower() in ("fetch", "patch", "search", "read", "setNone"):
                 a.speak(read())
             
             elif command.lower() in ("help", "instruction", "instructions"):
@@ -162,10 +170,10 @@ def main():
             elif command.lower() in ("alert", "alerts"):
                 if alerts:
                     alerts = False
-                    a.speak("Alerts are on.")
+                    a.speak("Alerts are turned off.")
                 else:
                     alerts = True
-                    a.speak("Alerts are off.")
+                    a.speak("Alerts are turned on.")
             
             elif command.lower() == "stop":
                 print("\nUser asked to stop the service")
