@@ -50,7 +50,11 @@ def check_mails(assistant, email, interval):
 def get_credential(msg, classType):
     loop = True
     while loop:
-        credential = classType(a.listen(msg).lower().replace(" ",""))
+        try:
+            credential = classType(a.listen(msg).lower().replace(" ",""))
+        except ValueError:
+            a.speak("Invalid input.")
+            continue
         if credential == "":
             a.speak("Try speaking something")
             continue
