@@ -3,7 +3,9 @@ from email_operations import EmailOperations
 from time import sleep
 import threading
 
-
+"""
+Enter your email id and password below
+"""
 emailId = "YourEmailIdHere"
 password = "YourPasswordHere"
 
